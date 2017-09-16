@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>班级说说</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/my.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">班级说说</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="/list">用户列表</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <% if(!login){%>
+                    <li><a href="/regist">注册</a></li>
+                    <li><a href="/login">登陆</a></li>
+                <%}else{%>>
+                    <li><img src="<%= touxiangurl %>" width="30" height="30" style="position:relative; top:8px; left: 0px;"></li>
+                    <li><a>欢迎你，亲爱的<%= nicheng %></a></li>
+                    <li><a href="/profile">更改个人信息</a></li>
+                <%}%>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<section class="container">
+    <%if(login){%>
+        <div class="row">
+            <h4>发表你的说说：</h4>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" autofocus id="content"/>
+            </div>
+            <div class="col-lg-1">
+                <button type="button" class="btn btn-success" id="btn">发表</button>
+            </div>
+        </div>
+    <%}%>
+</section>
+
+
+<section class="container">
+    <div class="row" id="shu">
+
+    </div>
+</section>
+
+<script type="text/template" id="template">
+    <div class=" col-lg-3">
+        <div class="tiezi">
+            <h3><a href="/user/{{ yonghuming }}"><img src="{{ touxiang }}" alt="">{{ nicheng }}</a>说：</h3>
+            <p>
+                <a href="/shuoshuo/{{ _id }}"> {{ content }}</a>
+            </p>
+
+            <p>{{ time }}</p>
+        </div>
+    </div>
+</script>
+
+<script src="/public/js/jquery-1.12.3.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/underscore.js"></script>
+<script type="text/javascript">
+    $("#btn").click(function(){
+        $.post("/fabiao",{
+            "content" : $("#content").val()
+        },function(data){
+            //alert(data);
+            $('#content').val("")
+        })
+    });
+
+
+    var compile = _.template($("#template").html());
+    //请求所有帖子
+    $.get("/list",function(data){
+
+        _.each(data.jieguo,function(dictionary){
+            //console.log(dictionary)
+            //模板修正
+            if(dictionary.touxiang){
+                dictionary.touxiang = "/public/avatar/" + dictionary.yonghuming + ".jpg";
+            }else{
+                dictionary.touxiang = "/public/avatar/0.jpg";
+            }
+            var $dom = $(compile(dictionary));
+            $("#shu").append($dom);
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆 - 班级说说</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/my.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">班级说说</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">用户列表</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/regist">注册</a></li>
+                <li class="active"><a href="#">登陆</a></li>
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<section class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="page-header">
+                <h1>请登陆
+                    <small>平等自由的分享知识</small>
+                </h1>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="yonghuming" placeholder="请填写用户名，不要填写昵称">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="mima" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="alert alert-danger" role="alert" id="kuang" style="display: none;">...</div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-success" id="btn">登陆</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="/public/js/jquery-1.12.3.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    //点击注册按钮之后做的事情
+    $("#btn").click(function () {
+        $.post("/logincheck",{
+            "yonghuming" : $("#yonghuming").val(),
+            "mima"      : $("#mima").val(),
+        },function(data){
+            if(data === "CHENGGONG"){
+                console.log(data,'data')
+                alert("登陆成功，现在将引导你回首页.....");
+                window.location = "/";
+            }else if(data == "YONGHUMINGBUCUNZAI"){
+                $("#kuang").show().html("用户名不存在");
+            }else if(data == "MIMACUOWU"){
+                $("#kuang").show().html("用户名存在，但是密码错误");
+            }
+        })
+    });
+</script>
+</body>
+</html>

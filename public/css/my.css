@@ -1,0 +1,35 @@
+.navbar-default {
+    background:linear-gradient(45deg,#020031 0,#6d3353 100%);
+    border:none;
+    border-radius: 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #FFF;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+    color:yellow;
+}
+
+.tiezi img{
+    width:50px;
+    height:50px;
+
+}
+.tiezi{
+    box-shadow: 1px 1px 1px black;
+    border:1px solid #3f2537;
+    padding:10px;
+    padding-top:0;
+    height:190px;
+    margin-bottom:10px;
+    overflow: hidden;
+}
+
+#shu{
+    padding-top:40px;
+}

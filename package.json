@@ -1,0 +1,26 @@
+{
+  "name": "nodeproject",
+  "version": "1.0.0",
+  "description": "web boostrap server node  database mongodb",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "keywords": [
+    "boostrap node mongodb"
+  ],
+  "author": "fanjunlin",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "formidable": "^1.1.1",
+    "gm": "^1.23.0",
+    "install": "^0.10.1",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.11",
+    "npm": "^5.4.2",
+    "path": "^0.12.7"
+  }
+}

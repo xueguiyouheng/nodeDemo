@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>切图 - 班级说说</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/my.css">
+    <link rel="stylesheet" href="/public/css/jquery-ui.css">
+    <style type="text/css">
+        .box{
+            border: 1px solid #000;
+            width: 560px;
+            height: 300px;
+            position: relative;
+        }
+        .box img{
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .cut{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            overflow: hidden;
+            background: url(<%= imgurl %>);
+        }
+        .t{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2000px;
+            height: 0;
+            border-top: 2px dashed red;
+        }
+        .d{
+            position: absolute;
+            bottom: 0;
+            left: -1000px;
+            width: 2000px;
+            height: 0;
+            border-top: 2px dashed red;
+        }
+        .l{
+            position: absolute;
+            top: -1000px;
+            left: 0;
+            height: 2000px;
+            width: 0;
+            border-left: 2px dashed red;
+        }
+        .r{
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 2000px;
+            width: 0;
+            border-left: 2px dashed red;
+        }
+        .mask{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">班级说说</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="/user/:username">用户列表</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><img src="/public/avatar/<%= yonghuming %>.jpg" width="30" height="30" style="position:relative; top:8px; left: 0px;"></li>
+
+                <li><a>欢迎你，亲爱的<%= yonghuming %></a></li>
+                <li class="active"><a href="/profile">更改个人信息</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<section class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>请裁切你的头像</h1>
+            <br>
+            <div class="box">
+                <img id="mainpic" src="<%= imgurl %>" alt="" />
+
+                <div class="mask"></div>
+
+                <div class="cut">
+                    <div class="t"></div>
+                    <div class="d"></div>
+                    <div class="l"></div>
+                    <div class="r"></div>
+                </div>
+            </div>
+            <br>
+            <button type="button" id="cutbtn" class="btn btn-success">剪裁</button>
+
+        </div>
+    </div>
+</section>
+
+<script src="/public/js/jquery-1.12.3.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    var x = 0;
+    var y = 0;
+    var w = 100;
+    var h = 100;
+
+    //让我们的容器的宽度、高度和图片的宽度、高度一样
+    $(".box").css({
+        "width" : $("#mainpic").width(),
+        "height" : $("#mainpic").height()
+    });
+
+
+    //可拖拽
+    $(".cut").draggable({
+        "containment" : "parent",
+        "drag" 	: function(event,ui){
+            x = ui.position.left;
+            y = ui.position.top;
+
+            $(".cut").css("background-position",-x + "px " + -y + "px");
+        }
+    });
+
+    //改变尺寸
+    $(".cut").resizable({
+        "aspectRatio": 1 / 1,
+        "containment": ".box",
+        "resize" : function(event,ui){
+            w = ui.size.width;
+            h = ui.size.height;
+        }
+    });
+
+    //线的运动
+    linemove();
+    function linemove(){
+        $(".t").animate({"left":-1000},14000,"linear",function(){
+            $(this).css("left",0);
+            linemove();
+        });
+
+        $(".d").animate({"left":0},14000,"linear",function(){
+            $(this).css("left",-1000);
+        });
+
+        $(".l").animate({"top":0},14000,"linear",function(){
+            $(this).css("top",-1000);
+        });
+
+        $(".r").animate({"top":-1000},14000,"linear",function(){
+            $(this).css("top",0);
+        });
+    }
+
+    //点击切图按钮之后做的事情
+    $("#cutbtn").click(function(){
+        //发出Ajax请求
+        $.get("/docut",{
+            "w": w,
+            "h": h,
+            "x": x,
+            "y": y,
+            "pic" : '<%= imgurl %>'
+        },function(data){
+            if(data == "OK"){
+                alert("裁剪完毕");
+                window.location = '/'
+            }else{
+                alert("失败");
+            }
+        })
+    })
+</script>
+</body>
+</html>

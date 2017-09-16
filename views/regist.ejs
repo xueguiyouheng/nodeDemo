@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册 - 班级说说</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/my.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">班级说说</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="list">用户列表</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#">注册</a></li>
+                <li><a href="/login">登陆</a></li>
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<section class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="page-header">
+                <h1>欢迎注册班级说说
+                    <small>这个说说很牛逼</small>
+                </h1>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="yonghuming" placeholder="用户名只能是英语和数字">
+                    </div>
+
+                    <div class="tip" style="padding-left:110px;line-height:40px;display: none;">
+                        <span class="glyphicon glyphicon-ok" style="color:green;"></span>
+                        <span class="wenzi"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="mima" placeholder="请输入密码，最少6位">
+                    </div>
+                </div>
+                <div class="alert alert-danger" role="alert" id="kuang" style="display: none;">...</div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-success" id="btn">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="/public/js/jquery-1.12.3.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $("#yonghuming").blur(function () {
+        $.get("/checkyonghuming", {"yonghuming": $(this).val()}, function (data) {
+            //正则验证
+            //正则，用户名只能是英语和数字，长度最少5位，最长18位
+            if (!/^\w{5,18}$/.test($("#yonghuming").val())) {
+                $(".tip").fadeIn();
+                $(".tip").find("span:first").attr("class", "glyphicon glyphicon-remove").css("color", "red");
+                $(".tip").find("span:last").html("用户名只能是英语和数字，长度最少5位，最长18位").css("color", "red");
+                return;
+            }
+            if (data == "ZHANYONG") {
+                $(".tip").fadeIn();
+                $(".tip").find("span:first").attr("class", "glyphicon glyphicon-remove").css("color", "red");
+                $(".tip").find("span:last").html("用户名已经被占用").css("color", "red");
+            } else if (data == "MEIYOUBEIZHANYONG") {
+                $(".tip").fadeIn();
+                $(".tip").find("span:first").attr("class", "glyphicon glyphicon-ok").css("color", "green");
+                $(".tip").find("span:last").html("可以使用").css("color", "green");
+            }
+        });
+    });
+
+    //用户名离开
+    $("#yonghuming").focus(function () {
+        $(".tip").fadeOut();
+    });
+
+
+    //点击注册按钮之后做的事情
+    $("#btn").click(function () {
+        $.post("/doregist", {
+            "yonghuming": $("#yonghuming").val(),
+            "mima": $("#mima").val()
+        }, function (data) {
+            if (data === "CHENGGONG") {
+                alert("注册成功，现在浏览器将自动跳转到登陆页面");
+                window.location = "/login";
+            } else if (data === "ZHANYONG") {
+                $("#kuang").show().html("用户名已经被占用了");
+            } else if (data === "CUOWU") {
+                $("#kuang").show().html("服务器错误");
+            } else if (data === "YONGHUMINGFEIFA") {
+                $("#kuang").show().html("用户名非法，只能是英语和数字，5到18位");
+            } else if (data === "MIMAFEIFA") {
+                $("#kuang").show().html("密码格式错误！");
+            }
+        })
+    });
+</script>
+</body>
+</html>
