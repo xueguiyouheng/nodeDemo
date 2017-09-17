@@ -308,7 +308,12 @@ exports.showShuoshuo = function(req,res){
     });
 }
 //评论
-exports.pinlun = function (req,res) {
+exports.pinglun = function (req,res) {
     console.log('评论')
-    res.send();
+    res.send('开发中...');
+}
+//话题
+exports.showTopic = function (req,res) {
+    console.log('话题')
+    res.send('开发中...');
 }

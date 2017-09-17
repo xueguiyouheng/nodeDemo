@@ -36,7 +36,8 @@ app.get("/docut"            ,router.docut);             //功能页。切图。
 app.post("/fabiao"          ,router.doFabiao);          //功能页。发表帖子。
 app.get("/user/:username"   ,router.showUser);          //用户的个人页面
 app.get("/shuoshuo/:idstring",router.showShuoshuo);     //说说的内容详情页面
-//app.get("/pinglun"          ,router.pinglun);           //评论接口
+app.get("/topic"            ,router.showTopic);         //显示话题页
+app.get("/pinglun"          ,router.pinglun);           //评论接口
 
 //数据接口
 app.post("/logincheck"      ,router.logincheck);        //Ajax接口，登陆功能

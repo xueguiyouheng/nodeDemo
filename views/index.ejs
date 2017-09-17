@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>班级说说</title>
+    <title>精彩生活</title>
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/my.css">
 </head>
@@ -18,14 +18,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">班级说说</a>
+            <a class="navbar-brand" href="/">精彩生活</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>
-                <li><a href="/list">用户列表</a></li>
+                <li><a href="/topic">话题</a></li>
 
             </ul>
 
@@ -34,7 +34,7 @@
                     <li><a href="/regist">注册</a></li>
                     <li><a href="/login">登陆</a></li>
                 <%}else{%>>
-                    <li><img src="<%= touxiangurl %>" width="30" height="30" style="position:relative; top:8px; left: 0px;"></li>
+                    <li><img  src="<%= touxiangurl %>" width="30" height="30" style="position:relative; top:8px; left: 0px; border-radius: 15px;"></li>
                     <li><a>欢迎你，亲爱的<%= nicheng %></a></li>
                     <li><a href="/profile">更改个人信息</a></li>
                 <%}%>
@@ -45,13 +45,19 @@
 
 <section class="container">
     <%if(login){%>
-        <div class="row">
-            <h4>发表你的说说：</h4>
+        <div class="row" >
+            <h3 class="col-lg-10 ">
+                <div class=" col-lg-2"></div>
+                    分享你的故事：
+            </h3>
             <div class="col-lg-10">
-                <input type="text" class="form-control" autofocus id="content"/>
-            </div>
-            <div class="col-lg-1">
-                <button type="button" class="btn btn-success" id="btn">发表</button>
+                <div class=" col-lg-2"></div>
+                <div class=" col-lg-9">
+                    <input type="text" class="form-control" autofocus id="content"/>
+                </div>
+                <div class="col-lg-1">
+                    <button type="button" class="btn btn-success" id="btn">发表</button>
+                </div>
             </div>
         </div>
     <%}%>
@@ -65,14 +71,15 @@
 </section>
 
 <script type="text/template" id="template">
-    <div class=" col-lg-3">
+    <div class=" col-lg-10">
+    <div class=" col-lg-2"></div>
         <div class="tiezi">
             <h3><a href="/user/{{ yonghuming }}"><img src="{{ touxiang }}" alt="">{{ nicheng }}</a>说：</h3>
             <p>
-                <a href="/shuoshuo/{{ _id }}"> {{ content }}</a>
+                <a href="/shuoshuo/{{ _id }}" class="content"> {{ content }}</a>
             </p>
 
-            <p>{{ time }}</p>
+            <p class="time">{{ time }}</p>
         </div>
     </div>
 </script>
@@ -108,5 +115,8 @@
         });
     });
 </script>
+<div style="width:100%;text-align: center;">
+    <div class=" listMore" > 没有更多了</div>
+    </div>
 </body>
 </html>

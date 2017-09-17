@@ -1,15 +1,16 @@
 .navbar-default {
-    background:linear-gradient(45deg,#020031 0,#6d3353 100%);
+    background:#fefefe;
     border:none;
     border-radius: 0;
+    box-shadow: 0px 2px 10px #40b370;
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: #FFF;
+    color: #000;
 }
 
 .navbar-default .navbar-brand {
-    color: #FFF;
+    color: #000;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
     color:yellow;
@@ -18,18 +19,59 @@
 .tiezi img{
     width:50px;
     height:50px;
+    border-radius: 25px;
+    margin-right: 20px;
 
 }
+
 .tiezi{
-    box-shadow: 1px 1px 1px black;
-    border:1px solid #3f2537;
     padding:10px;
     padding-top:0;
     height:190px;
-    margin-bottom:10px;
+    margin-bottom:20px;
     overflow: hidden;
-}
+    background-color: #fff;
 
+}
+.tiezi:hover{
+    box-shadow: 0px 2px 15px #40b370;
+}
+a{
+
+}
+h3{
+    margin-bottom: 24px;
+}
+body{
+
+    background: #f5f5f5;
+}
 #shu{
     padding-top:40px;
+}
+.content{
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none!important;
+    height: 56px;
+    line-height: 23px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.time{
+    text-align: right;
+    margin-right: 30px;
+}
+.listMore{
+    background-color:#ccc;
+    color: #fff;
+    display: inline-block;
+    line-height: 15px;
+    padding: 10px 24px;
+    border-radius: 22px;
+    font-size: 16px;
+    margin:60px auto;
 }
