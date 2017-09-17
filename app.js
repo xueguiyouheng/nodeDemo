@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var session = require('express-session');
 var router = require("./controller/router.js");
 //设置数据库连接
-mongoose.connect("mongodb://localhost/shuoshuo");
+mongoose.connect("mongodb://localhost/tizi");
 
 var app = express();
 
