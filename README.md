@@ -12,6 +12,6 @@ git clone
 #加载
 npm install 依赖
 #开启数据库
-mongod --dbpath  数据路径
+mongod --dbpath  数据库路径
 #启动
 node app.js
